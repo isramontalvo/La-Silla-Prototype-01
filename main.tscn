@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dgqcpwmjgdtpe" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://c3ftdqtkpxrj4" path="res://icon.svg" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://chfdlctkbpxbh" path="res://collectible.gd" id="3_h2yge"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vawvv"]
 
 [node name="Main" type="Node2D" unique_id=1116524799]
 
@@ -16,4 +19,15 @@ shape = SubResource("RectangleShape2D_vawvv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1265971733]
 scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_h2yge")
+
+[node name="Collectible" type="Area2D" parent="." unique_id=461350552]
+position = Vector2(750, 300)
+script = ExtResource("3_h2yge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectible" unique_id=539430724]
+shape = SubResource("CircleShape2D_vawvv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Collectible/CollisionShape2D" unique_id=1895105773]
+scale = Vector2(0.12, 0.12)
 texture = ExtResource("2_h2yge")
