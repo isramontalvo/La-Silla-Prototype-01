@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgqcpwmjgdtpe" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bqhdjfwh6qyan" path="res://main.gd" id="1_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://c3ftdqtkpxrj4" path="res://icon.svg" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://d1p4dd878b8p5" path="res://assets/sprites/character_sprites.png" id="3_7mycd"]
 [ext_resource type="Script" uid="uid://chfdlctkbpxbh" path="res://collectible.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://cpwgh6cw2qnib" path="res://enemy.gd" id="5_lquwl"]
 
@@ -11,6 +11,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_vawvv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eksqv"]
+radius = 45.0
 
 [node name="Main" type="Node2D" unique_id=1116524799]
 script = ExtResource("1_1bvp3")
@@ -23,8 +24,10 @@ script = ExtResource("1_0xm2m")
 shape = SubResource("RectangleShape2D_vawvv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1265971733]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_h2yge")
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("3_7mycd")
+region_enabled = true
+region_rect = Rect2(0, 80, 420, 400)
 
 [node name="BoostTimer" type="Timer" parent="Player" unique_id=1256605609]
 one_shot = true
@@ -37,8 +40,10 @@ script = ExtResource("3_h2yge")
 shape = SubResource("CircleShape2D_vawvv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Collectible/CollisionShape2D" unique_id=1895105773]
-scale = Vector2(0.12, 0.12)
-texture = ExtResource("2_h2yge")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_7mycd")
+region_enabled = true
+region_rect = Rect2(500, 80, 500, 400)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=716114552]
 
@@ -55,5 +60,7 @@ script = ExtResource("5_lquwl")
 shape = SubResource("CircleShape2D_eksqv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1534523316]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("2_h2yge")
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("3_7mycd")
+region_enabled = true
+region_rect = Rect2(500, 500, 500, 500)
