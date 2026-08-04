@@ -1,6 +1,14 @@
 extends CharacterBody2D
 
-@export var speed: float = 250.0
+@export var base_speed: float = 250.0
+
+var current_speed: float
+
+@onready var boost_timer: Timer = $BoostTimer
+
+func _ready() -> void:
+	current_speed = base_speed
+	boost_timer.timeout.connect(_on_boost_timer_timeout)
 
 func _physics_process(_delta: float) -> void:
 	var direction := Input.get_vector(
@@ -10,7 +18,7 @@ func _physics_process(_delta: float) -> void:
 		"ui_down"
 	)
 
-	velocity = direction * speed
+	velocity = direction * current_speed
 	move_and_slide()
 
 	var screen_size := get_viewport_rect().size
@@ -27,3 +35,10 @@ func _physics_process(_delta: float) -> void:
 		margin,
 		screen_size.y - margin
 	)
+
+func apply_speed_boost(amount: float = 120.0, duration: float = 4.0) -> void:
+	current_speed = base_speed + amount
+	boost_timer.start(duration)
+
+func _on_boost_timer_timeout() -> void:
+	current_speed = base_speed

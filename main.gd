@@ -1,20 +1,27 @@
 extends Node2D
 
 var score: int = 0
+var next_difficulty_score: int = 3
 
 @onready var score_label: Label = $UI/ScoreLabel
-@onready var collectible: Area2D = $Collectible
+@onready var collectible = $Collectible
 @onready var enemy = $Enemy
+@onready var player = $Player
 
 func _ready() -> void:
 	collectible.collected.connect(_on_collectible_collected)
 	update_score_label()
 
-func _on_collectible_collected() -> void:
-	score += 1
+func _on_collectible_collected(is_special: bool) -> void:
+	if is_special:
+		score += 3
+		player.apply_speed_boost(120.0, 4.0)
+	else:
+		score += 1
 
-	if score % 3 == 0:
+	while score >= next_difficulty_score:
 		enemy.increase_speed(15.0)
+		next_difficulty_score += 3
 
 	update_score_label()
 
