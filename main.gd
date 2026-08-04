@@ -7,9 +7,11 @@ var next_difficulty_score: int = 3
 @onready var collectible = $Collectible
 @onready var enemy = $Enemy
 @onready var player = $Player
+@onready var game_over_ui = $GameOverUI
 
 func _ready() -> void:
 	collectible.collected.connect(_on_collectible_collected)
+	enemy.player_caught.connect(_on_player_caught)
 	update_score_label()
 
 func _on_collectible_collected(is_special: bool) -> void:
@@ -27,3 +29,6 @@ func _on_collectible_collected(is_special: bool) -> void:
 
 func update_score_label() -> void:
 	score_label.text = "Score: " + str(score)
+	
+func _on_player_caught() -> void:
+	game_over_ui.show_game_over(score)

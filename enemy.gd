@@ -1,5 +1,5 @@
 extends Area2D
-
+signal player_caught
 @export var speed: float = 100.0
 
 @onready var player: CharacterBody2D = $"../Player"
@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body == player:
-		get_tree().reload_current_scene()
+		player_caught.emit()
 
 func increase_speed(amount: float) -> void:
 	speed += amount

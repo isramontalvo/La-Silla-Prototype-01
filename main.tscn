@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d1p4dd878b8p5" path="res://assets/sprites/character_sprites.png" id="3_7mycd"]
 [ext_resource type="Script" uid="uid://chfdlctkbpxbh" path="res://collectible.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://cpwgh6cw2qnib" path="res://enemy.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://hyibctuqysl6" path="res://game_over_ui.gd" id="6_7mycd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
 
@@ -65,3 +66,51 @@ scale = Vector2(0.12, 0.12)
 texture = ExtResource("3_7mycd")
 region_enabled = true
 region_rect = Rect2(500, 500, 500, 500)
+
+[node name="GameOverUI" type="CanvasLayer" parent="." unique_id=533574316]
+script = ExtResource("6_7mycd")
+
+[node name="Overlay" type="ColorRect" parent="GameOverUI" unique_id=2049951075]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOverUI/Overlay" unique_id=403119599]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="GameOverUI/Overlay/CenterContainer" unique_id=575242163]
+custom_minimum_size = Vector2(420, 260)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverUI/Overlay/CenterContainer/PanelContainer" unique_id=430377382]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer" unique_id=1084164231]
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1651680631]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="FinalScoreLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=15344005]
+layout_mode = 2
+text = "🐭"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2051500853]
+layout_mode = 2
+text = "MEOW"
