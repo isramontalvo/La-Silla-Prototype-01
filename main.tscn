@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://bqhdjfwh6qyan" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://c3ftdqtkpxrj4" path="res://icon.svg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://chfdlctkbpxbh" path="res://collectible.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://cpwgh6cw2qnib" path="res://enemy.gd" id="5_lquwl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vawvv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eksqv"]
 
 [node name="Main" type="Node2D" unique_id=1116524799]
 script = ExtResource("1_1bvp3")
@@ -40,3 +43,14 @@ texture = ExtResource("2_h2yge")
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Score: 0"
+
+[node name="Enemy" type="Area2D" parent="." unique_id=326392721]
+position = Vector2(150, 150)
+script = ExtResource("5_lquwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1482713957]
+shape = SubResource("CircleShape2D_eksqv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1534523316]
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("2_h2yge")
