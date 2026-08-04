@@ -32,14 +32,15 @@ region_rect = Rect2(0, 80, 420, 400)
 [node name="BoostTimer" type="Timer" parent="Player" unique_id=1256605609]
 one_shot = true
 
-[node name="Collectible" type="Area2D" parent="." unique_id=461350552]
+[node name="Collectible" type="Area2D" parent="." unique_id=461350552 node_paths=PackedStringArray("mouse_sprite")]
 position = Vector2(750, 300)
 script = ExtResource("3_h2yge")
+mouse_sprite = NodePath("CollisionShape2D/MouseSprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collectible" unique_id=539430724]
 shape = SubResource("CircleShape2D_vawvv")
 
-[node name="Sprite2D" type="Sprite2D" parent="Collectible/CollisionShape2D" unique_id=1895105773]
+[node name="MouseSprite" type="Sprite2D" parent="Collectible/CollisionShape2D" unique_id=1895105773]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_7mycd")
 region_enabled = true

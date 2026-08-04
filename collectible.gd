@@ -4,7 +4,12 @@ signal collected(is_special: bool)
 
 @export_range(0.0, 1.0) var special_chance: float = 0.20
 
+@export var mouse_sprite: Sprite2D
+
 var is_special: bool = false
+
+const NORMAL_MOUSE_RECT := Rect2(500, 80, 500, 400)
+const PURPLE_MOUSE_RECT := Rect2(0, 500, 500, 500)
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -27,8 +32,9 @@ func move_to_random_position() -> void:
 
 func choose_collectible_type() -> void:
 	is_special = randf() < special_chance
+	mouse_sprite.region_enabled = true
 
 	if is_special:
-		modulate = Color(0.65, 0.25, 1.0)
+		mouse_sprite.region_rect = PURPLE_MOUSE_RECT
 	else:
-		modulate = Color.WHITE
+		mouse_sprite.region_rect = NORMAL_MOUSE_RECT
