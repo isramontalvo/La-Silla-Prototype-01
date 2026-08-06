@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://brw8xfwqqhe25" path="res://assets/title/title_chase_art.png.png" id="11_efxa6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
 
@@ -117,7 +118,7 @@ horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2051500853]
 layout_mode = 2
-text = "MEOW"
+text = "RESTART"
 
 [node name="MousePickupSound" type="AudioStreamPlayer" parent="." unique_id=1411126515]
 stream = ExtResource("7_272bh")
@@ -140,6 +141,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CatArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=332074175]
+custom_minimum_size = Vector2(720, 340)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 120.0
+offset_right = 80.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_efxa6")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TitleLabel" type="Label" parent="TitleScreenUI/Background" unique_id=1186147652]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 157.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.8543009, 0.72729325, 0.06966328, 1)
+theme_override_colors/font_outline_color = Color(0.07783497, 0.072694294, 0.05887392, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 48
+text = "CATCH MEOW
+IF YOU CAN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="TitleScreenUI/Background" unique_id=1866223885]
 layout_mode = 1
 anchors_preset = 15
@@ -150,11 +183,10 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TitleScreenUI/Background/CenterContainer" unique_id=1774419682]
 layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="TitleScreenUI/Background/CenterContainer/VBoxContainer" unique_id=1186147652]
-layout_mode = 2
-text = "CATCH MEOW IF YOU CAN"
+theme_override_constants/separation = 24
 
 [node name="StartButton" type="Button" parent="TitleScreenUI/Background/CenterContainer/VBoxContainer" unique_id=115867601]
+custom_minimum_size = Vector2(220, 60)
 layout_mode = 2
-text = "MEOW"
+theme_override_font_sizes/font_size = 28
+text = "START"
