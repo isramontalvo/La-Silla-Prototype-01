@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cpwgh6cw2qnib" path="res://enemy.gd" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://hyibctuqysl6" path="res://game_over_ui.gd" id="6_7mycd"]
 [ext_resource type="AudioStream" uid="uid://corr76h0f78gf" path="res://assets/sounds/threeTone2.ogg" id="7_272bh"]
+[ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
 
@@ -118,3 +119,7 @@ text = "MEOW"
 
 [node name="MousePickupSound" type="AudioStreamPlayer" parent="." unique_id=1411126515]
 stream = ExtResource("7_272bh")
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="." unique_id=2085405120]
+process_mode = 3
+stream = ExtResource("8_5vw27")

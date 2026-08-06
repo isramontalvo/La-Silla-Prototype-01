@@ -9,6 +9,7 @@ var next_difficulty_score: int = 3
 @onready var player = $Player
 @onready var game_over_ui = $GameOverUI
 @onready var mouse_pickup_sound: AudioStreamPlayer = $MousePickupSound
+@onready var game_over_sound: AudioStreamPlayer = $GameOverSound
 
 func _ready() -> void:
 	collectible.collected.connect(_on_collectible_collected)
@@ -33,4 +34,5 @@ func update_score_label() -> void:
 	score_label.text = "Score: " + str(score)
 	
 func _on_player_caught() -> void:
+	game_over_sound.play()
 	game_over_ui.show_game_over(score)
