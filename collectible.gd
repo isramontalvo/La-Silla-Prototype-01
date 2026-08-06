@@ -3,8 +3,10 @@ extends Area2D
 signal collected(is_special: bool)
 
 @export_range(0.0, 1.0) var special_chance: float = 0.20
+@export var minimum_enemy_distance: float = 180.0
 
 @export var mouse_sprite: Sprite2D
+@onready var enemy: Area2D = $"../Enemy"
 
 var is_special: bool = false
 
@@ -25,10 +27,18 @@ func move_to_random_position() -> void:
 	var screen_size := get_viewport_rect().size
 	var margin := 50.0
 
-	position = Vector2(
+	var new_position := Vector2(
 		randf_range(margin, screen_size.x - margin),
 		randf_range(margin, screen_size.y - margin)
 	)
+
+	while new_position.distance_to(enemy.global_position) < minimum_enemy_distance:
+		new_position = Vector2(
+			randf_range(margin, screen_size.x - margin),
+			randf_range(margin, screen_size.y - margin)
+		)
+
+	position = new_position
 
 func choose_collectible_type() -> void:
 	is_special = randf() < special_chance
