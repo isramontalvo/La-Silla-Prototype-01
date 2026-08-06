@@ -5,6 +5,7 @@ extends CharacterBody2D
 var current_speed: float
 
 @onready var boost_timer: Timer = $BoostTimer
+@onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	current_speed = base_speed
@@ -38,7 +39,9 @@ func _physics_process(_delta: float) -> void:
 
 func apply_speed_boost(amount: float = 120.0, duration: float = 4.0) -> void:
 	current_speed = base_speed + amount
+	sprite.modulate = Color(0.75, 0.45, 1.0)
 	boost_timer.start(duration)
 
 func _on_boost_timer_timeout() -> void:
 	current_speed = base_speed
+	sprite.modulate = Color.WHITE
