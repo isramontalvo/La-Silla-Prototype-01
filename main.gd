@@ -10,6 +10,7 @@ var next_difficulty_score: int = 3
 @onready var game_over_ui = $GameOverUI
 @onready var mouse_pickup_sound: AudioStreamPlayer = $MousePickupSound
 @onready var game_over_sound: AudioStreamPlayer = $GameOverSound
+@onready var speed_boost_sound: AudioStreamPlayer = $SpeedBoostSound
 
 func _ready() -> void:
 	collectible.collected.connect(_on_collectible_collected)
@@ -17,11 +18,12 @@ func _ready() -> void:
 	update_score_label()
 
 func _on_collectible_collected(is_special: bool) -> void:
-	mouse_pickup_sound.play()
 	if is_special:
+		speed_boost_sound.play()
 		score += 3
 		player.apply_speed_boost(120.0, 4.0)
 	else:
+		mouse_pickup_sound.play()
 		score += 1
 
 	while score >= next_difficulty_score:
