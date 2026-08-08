@@ -11,6 +11,10 @@
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://brw8xfwqqhe25" path="res://assets/title/title_chase_art.png.png" id="11_efxa6"]
+[ext_resource type="Texture2D" uid="uid://jkb4i2cy7pra" path="res://assets/ui/left.png" id="12_vivmo"]
+[ext_resource type="Texture2D" uid="uid://qgo2etw3nofr" path="res://assets/ui/right.png" id="13_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://dxq8apn8k0o51" path="res://assets/ui/up.png" id="14_yaehf"]
+[ext_resource type="Texture2D" uid="uid://bgf6a0mni3d0b" path="res://assets/ui/down.png" id="15_074og"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
 
@@ -190,3 +194,25 @@ custom_minimum_size = Vector2(220, 60)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "START"
+
+[node name="TouchControlsUI" type="CanvasLayer" parent="." unique_id=1090041406]
+
+[node name="LeftButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=277323863]
+position = Vector2(120, 540)
+texture_normal = ExtResource("12_vivmo")
+action = "ui_left"
+
+[node name="RightButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1257515586]
+position = Vector2(220, 540)
+texture_normal = ExtResource("13_2cqfq")
+action = "ui_right"
+
+[node name="UpButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1090154065]
+position = Vector2(170, 490)
+texture_normal = ExtResource("14_yaehf")
+action = "ui_up"
+
+[node name="DownButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1706451177]
+position = Vector2(170, 590)
+texture_normal = ExtResource("15_074og")
+action = "ui_down"
