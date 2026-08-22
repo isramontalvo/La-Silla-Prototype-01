@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://brw8xfwqqhe25" path="res://assets/title/title_chase_art.png.png" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://jkb4i2cy7pra" path="res://assets/ui/left.png" id="12_vivmo"]
 [ext_resource type="Texture2D" uid="uid://qgo2etw3nofr" path="res://assets/ui/right.png" id="13_2cqfq"]
@@ -28,6 +29,7 @@ script = ExtResource("1_1bvp3")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=864936273]
 position = Vector2(500, 300)
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_0xm2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1378145417]
@@ -65,6 +67,7 @@ text = "Score: 0"
 
 [node name="Enemy" type="Area2D" parent="." unique_id=326392721]
 position = Vector2(150, 150)
+scale = Vector2(1.9, 1.9)
 script = ExtResource("5_lquwl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1482713957]
@@ -144,6 +147,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.16470589, 0.17254902, 0.1882353, 0.98039216)
 
 [node name="CatArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=332074175]
 custom_minimum_size = Vector2(720, 340)
@@ -151,13 +155,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 80.0
-offset_top = 120.0
-offset_right = 80.0
-offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("11_efxa6")
+texture = ExtResource("11_2cqfq")
 expand_mode = 1
 stretch_mode = 6
 
@@ -173,7 +173,7 @@ theme_override_colors/font_outline_color = Color(0.07783497, 0.072694294, 0.0588
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 48
 text = "CATCH MEOW
-IF YOU CAN"
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -182,6 +182,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -117.0
+offset_bottom = -117.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -195,24 +197,41 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "START"
 
+[node name="ChaseArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=1587802934]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -30.0
+offset_right = 467.0
+offset_bottom = 390.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_efxa6")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="TouchControlsUI" type="CanvasLayer" parent="." unique_id=1090041406]
 
 [node name="LeftButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=277323863]
-position = Vector2(120, 540)
+position = Vector2(104, 495)
 texture_normal = ExtResource("12_vivmo")
 action = "ui_left"
 
 [node name="RightButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1257515586]
-position = Vector2(220, 540)
+position = Vector2(204, 495)
 texture_normal = ExtResource("13_2cqfq")
 action = "ui_right"
 
 [node name="UpButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1090154065]
-position = Vector2(170, 490)
+position = Vector2(154, 445)
 texture_normal = ExtResource("14_yaehf")
 action = "ui_up"
 
 [node name="DownButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1706451177]
-position = Vector2(170, 590)
+position = Vector2(154, 545)
 texture_normal = ExtResource("15_074og")
 action = "ui_down"

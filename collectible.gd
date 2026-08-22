@@ -4,6 +4,7 @@ signal collected(is_special: bool)
 
 @export_range(0.0, 1.0) var special_chance: float = 0.20
 @export var minimum_enemy_distance: float = 180.0
+@export var touch_control_safe_zone := Rect2(0, 430, 320, 218)
 
 @export var mouse_sprite: Sprite2D
 @onready var enemy: Area2D = $"../Enemy"
@@ -32,7 +33,8 @@ func move_to_random_position() -> void:
 		randf_range(margin, screen_size.y - margin)
 	)
 
-	while new_position.distance_to(enemy.global_position) < minimum_enemy_distance:
+	while new_position.distance_to(enemy.global_position) < minimum_enemy_distance \
+or touch_control_safe_zone.has_point(new_position):
 		new_position = Vector2(
 			randf_range(margin, screen_size.x - margin),
 			randf_range(margin, screen_size.y - margin)
