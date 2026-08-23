@@ -11,7 +11,21 @@
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://brw8xfwqqhe25" path="res://assets/title/title_chase_art.png.png" id="11_efxa6"]
+[ext_resource type="Texture2D" uid="uid://u1vw0ig480d5" path="res://assets/title/catch_meow_title_portrait.png.png" id="12_dg77c"]
+[ext_resource type="Texture2D" uid="uid://duok2no1ddx0a" path="res://assets/title/background.png" id="13_ycdy4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eksqv"]
+size = Vector2(123.875, 60)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v630f"]
+radius = 22.0
+height = 88.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0i2r"]
+size = Vector2(109, 65)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r8wnb"]
+size = Vector2(88, 51)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_074og"]
 
@@ -23,6 +37,43 @@ height = 50.0
 
 [node name="Main" type="Node2D" unique_id=1116524799]
 script = ExtResource("1_1bvp3")
+
+[node name="HayObstacle" type="StaticBody2D" parent="." unique_id=1974781614]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HayObstacle" unique_id=1121410192]
+position = Vector2(157.0625, 496)
+shape = SubResource("RectangleShape2D_eksqv")
+
+[node name="DogObstacle" type="StaticBody2D" parent="." unique_id=1730971800]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DogObstacle" unique_id=1155474643]
+position = Vector2(498, 500)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_v630f")
+
+[node name="TroughObstacle" type="StaticBody2D" parent="." unique_id=1133053536]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TroughObstacle" unique_id=56012027]
+position = Vector2(468.5, 667.5)
+shape = SubResource("RectangleShape2D_f0i2r")
+
+[node name="WheelbarrowObstacle" type="StaticBody2D" parent="." unique_id=887670164]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WheelbarrowObstacle" unique_id=937687101]
+position = Vector2(166, 814.5)
+shape = SubResource("RectangleShape2D_r8wnb")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1146788010]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 648.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_ycdy4")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=864936273]
 position = Vector2(500, 300)
@@ -154,6 +205,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("11_2cqfq")
 expand_mode = 1
 stretch_mode = 6
@@ -179,8 +231,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -117.0
-offset_bottom = -117.0
+offset_left = 210.0
+offset_top = 887.0
+offset_right = -192.0
+offset_bottom = -166.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -188,25 +242,24 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="StartButton" type="Button" parent="TitleScreenUI/Background/CenterContainer/VBoxContainer" unique_id=115867601]
-custom_minimum_size = Vector2(220, 60)
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "START"
-
 [node name="ChaseArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=1587802934]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -253.0
-offset_top = -30.0
-offset_right = 467.0
-offset_bottom = 390.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("11_efxa6")
+texture = ExtResource("12_dg77c")
 expand_mode = 1
-stretch_mode = 5
+
+[node name="StartButton" type="Button" parent="TitleScreenUI/Background" unique_id=115867601]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 10
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 0
+offset_left = 223.0
+offset_top = 906.0
+offset_right = 443.0
+offset_bottom = 966.0
+theme_override_font_sizes/font_size = 28
+text = "START"

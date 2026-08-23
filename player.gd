@@ -37,7 +37,7 @@ func _physics_process(_delta: float) -> void:
 	if touch_active:
 		var distance_to_target := global_position.distance_to(target_position)
 
-		if distance_to_target > 8.0:
+		if distance_to_target > 16.0:
 			var direction := global_position.direction_to(target_position)
 			velocity = direction * current_speed
 		else:

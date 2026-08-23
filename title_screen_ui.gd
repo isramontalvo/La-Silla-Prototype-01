@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 
-@onready var start_button: Button = $Background/CenterContainer/VBoxContainer/StartButton
+@onready var start_button: Button = $Background/StartButton
 
 
 func _ready() -> void:
