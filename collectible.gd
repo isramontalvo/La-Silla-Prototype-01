@@ -16,6 +16,7 @@ const PURPLE_MOUSE_RECT := Rect2(0, 500, 500, 500)
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	move_to_random_position()
 	choose_collectible_type()
 
 func _on_body_entered(body: Node2D) -> void:

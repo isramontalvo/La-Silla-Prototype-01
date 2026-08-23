@@ -12,17 +12,14 @@
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://brw8xfwqqhe25" path="res://assets/title/title_chase_art.png.png" id="11_efxa6"]
-[ext_resource type="Texture2D" uid="uid://jkb4i2cy7pra" path="res://assets/ui/left.png" id="12_vivmo"]
-[ext_resource type="Texture2D" uid="uid://qgo2etw3nofr" path="res://assets/ui/right.png" id="13_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://dxq8apn8k0o51" path="res://assets/ui/up.png" id="14_yaehf"]
-[ext_resource type="Texture2D" uid="uid://bgf6a0mni3d0b" path="res://assets/ui/down.png" id="15_074og"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vawvv"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_074og"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vawvv"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_eksqv"]
-radius = 45.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2cqfq"]
+radius = 20.0
+height = 50.0
 
 [node name="Main" type="Node2D" unique_id=1116524799]
 script = ExtResource("1_1bvp3")
@@ -33,7 +30,7 @@ scale = Vector2(1.5, 1.5)
 script = ExtResource("1_0xm2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1378145417]
-shape = SubResource("RectangleShape2D_vawvv")
+shape = SubResource("CapsuleShape2D_074og")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1265971733]
 scale = Vector2(0.12, 0.12)
@@ -45,7 +42,7 @@ region_rect = Rect2(0, 80, 420, 400)
 one_shot = true
 
 [node name="Collectible" type="Area2D" parent="." unique_id=461350552 node_paths=PackedStringArray("mouse_sprite")]
-position = Vector2(750, 300)
+position = Vector2(324, 300)
 script = ExtResource("3_h2yge")
 mouse_sprite = NodePath("CollisionShape2D/MouseSprite")
 
@@ -67,11 +64,11 @@ text = "Score: 0"
 
 [node name="Enemy" type="Area2D" parent="." unique_id=326392721]
 position = Vector2(150, 150)
-scale = Vector2(1.9, 1.9)
+scale = Vector2(3, 3)
 script = ExtResource("5_lquwl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1482713957]
-shape = SubResource("CircleShape2D_eksqv")
+shape = SubResource("CapsuleShape2D_2cqfq")
 
 [node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1534523316]
 scale = Vector2(0.12, 0.12)
@@ -213,25 +210,3 @@ grow_vertical = 2
 texture = ExtResource("11_efxa6")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="TouchControlsUI" type="CanvasLayer" parent="." unique_id=1090041406]
-
-[node name="LeftButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=277323863]
-position = Vector2(104, 495)
-texture_normal = ExtResource("12_vivmo")
-action = "ui_left"
-
-[node name="RightButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1257515586]
-position = Vector2(204, 495)
-texture_normal = ExtResource("13_2cqfq")
-action = "ui_right"
-
-[node name="UpButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1090154065]
-position = Vector2(154, 445)
-texture_normal = ExtResource("14_yaehf")
-action = "ui_up"
-
-[node name="DownButton" type="TouchScreenButton" parent="TouchControlsUI" unique_id=1706451177]
-position = Vector2(154, 545)
-texture_normal = ExtResource("15_074og")
-action = "ui_down"
