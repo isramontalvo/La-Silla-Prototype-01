@@ -11,11 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://u1vw0ig480d5" path="res://assets/title/catch_meow_title_portrait.png.png" id="12_dg77c"]
+[ext_resource type="Texture2D" uid="uid://cxlgn0n4ugy3h" path="res://assets/title/Mouse Rush !.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://duok2no1ddx0a" path="res://assets/title/background.png" id="13_ycdy4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vivmo"]
-size = Vector2(88.25, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w48qg"]
 size = Vector2(244.5, 261)
@@ -44,17 +41,8 @@ size = Vector2(88, 51)
 radius = 7.3333282
 height = 24.666656
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cqfq"]
-size = Vector2(92, 226)
-
 [node name="Main" type="Node2D" unique_id=1116524799]
 script = ExtResource("1_1bvp3")
-
-[node name="GateObstacle" type="StaticBody2D" parent="." unique_id=926060566]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GateObstacle" unique_id=288060812]
-position = Vector2(344.875, 251.5)
-shape = SubResource("RectangleShape2D_vivmo")
 
 [node name="RightBoundary" type="StaticBody2D" parent="." unique_id=194628855]
 
@@ -139,18 +127,26 @@ region_rect = Rect2(500, 80, 500, 400)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=716114552]
 
+[node name="BestScoreLabel" type="Label" parent="UI" unique_id=885950721]
+z_index = 10
+offset_left = 122.0
+offset_top = 78.0
+offset_right = 194.0
+offset_bottom = 104.0
+text = "BEST: 0"
+
 [node name="ScoreLabel" type="Label" parent="UI" unique_id=1924808413]
-offset_left = 45.0
-offset_top = 72.0
-offset_right = 183.0
-offset_bottom = 160.0
+offset_left = 26.0
+offset_top = 73.0
+offset_right = 155.0
+offset_bottom = 161.0
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
 [node name="Enemy" type="CharacterBody2D" parent="." unique_id=1825798641]
-position = Vector2(150, 150)
+position = Vector2(340, 130)
 scale = Vector2(3, 3)
 script = ExtResource("5_lquwl")
 
@@ -248,22 +244,6 @@ texture = ExtResource("11_2cqfq")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="TitleLabel" type="Label" parent="TitleScreenUI/Background" unique_id=1186147652]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 20.0
-offset_bottom = 157.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.8543009, 0.72729325, 0.06966328, 1)
-theme_override_colors/font_outline_color = Color(0.07783497, 0.072694294, 0.05887392, 1)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 48
-text = "CATCH MEOW
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="CenterContainer" type="CenterContainer" parent="TitleScreenUI/Background" unique_id=1866223885]
 layout_mode = 1
 anchors_preset = 15
@@ -287,7 +267,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("12_dg77c")
+texture = ExtResource("13_w48qg")
 expand_mode = 1
 
 [node name="StartButton" type="Button" parent="TitleScreenUI/Background" unique_id=115867601]
@@ -295,15 +275,9 @@ self_modulate = Color(1, 1, 1, 0)
 z_index = 10
 custom_minimum_size = Vector2(220, 60)
 layout_mode = 0
-offset_left = 223.0
-offset_top = 906.0
-offset_right = 443.0
-offset_bottom = 966.0
+offset_left = 142.0
+offset_top = 923.0
+offset_right = 508.0
+offset_bottom = 1077.0
 theme_override_font_sizes/font_size = 28
 text = "START"
-
-[node name="WinArea" type="Area2D" parent="." unique_id=1502818152]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WinArea" unique_id=702397621]
-position = Vector2(344, 115)
-shape = SubResource("RectangleShape2D_2cqfq")

@@ -5,6 +5,7 @@ extends CharacterBody2D
 var current_speed: float
 var touch_active: bool = false
 var target_position: Vector2
+var defeated: bool = false
 
 @onready var boost_timer: Timer = $BoostTimer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -17,6 +18,9 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if defeated:
+		return
+
 	if event is InputEventScreenTouch:
 		touch_active = event.pressed
 		target_position = event.position
@@ -34,6 +38,10 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if defeated:
+		velocity = Vector2.ZERO
+		return
+
 	if touch_active:
 		var distance_to_target := global_position.distance_to(target_position)
 
@@ -64,9 +72,19 @@ func _physics_process(_delta: float) -> void:
 
 
 func apply_speed_boost(amount: float = 120.0, duration: float = 4.0) -> void:
+	if defeated:
+		return
+
 	current_speed = base_speed + amount
 	sprite.modulate = Color(0.75, 0.45, 1.0)
 	boost_timer.start(duration)
+
+
+func show_defeated() -> void:
+	defeated = true
+	touch_active = false
+	velocity = Vector2.ZERO
+	z_index = 50
 
 
 func _on_boost_timer_timeout() -> void:
