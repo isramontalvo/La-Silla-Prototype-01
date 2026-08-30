@@ -1,6 +1,6 @@
 extends Area2D
 
-signal collected(mouse_type: String)
+signal collected(mouse_type: String, catch_position: Vector2)
 
 @export var minimum_enemy_distance: float = 180.0
 @export var house_restricted_zone := Rect2(0, 0, 648, 300)
@@ -12,6 +12,7 @@ signal collected(mouse_type: String)
 @export var mouse_sprite: Sprite2D
 
 @onready var enemy: CharacterBody2D = $"../Enemy"
+@onready var player: CharacterBody2D = $"../Player"
 
 var mouse_type: String = "normal"
 
@@ -69,14 +70,8 @@ func _draw() -> void:
 	var glow_color: Color
 
 	match mouse_type:
-		"normal":
-			glow_color = Color(1.0, 1.0, 1.0, 0.85)
-
 		"purple":
 			glow_color = Color(0.8, 0.4, 1.0, 0.85)
-
-		"gold":
-			glow_color = Color(1.0, 0.82, 0.15, 0.85)
 
 		_:
 			glow_color = Color(1.0, 1.0, 1.0, 0.85)
@@ -96,12 +91,16 @@ func _draw() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D:
-		collected.emit(mouse_type)
+	if body != player:
+		return
 
-		move_to_random_position()
-		choose_mouse_type()
-		choose_new_wander_direction()
+	var caught_at := global_position
+
+	collected.emit(mouse_type, caught_at)
+
+	move_to_random_position()
+	choose_mouse_type()
+	choose_new_wander_direction()
 
 
 func move_to_random_position() -> void:
@@ -131,6 +130,7 @@ func choose_new_wander_direction() -> void:
 
 func is_position_blocked(test_position: Vector2) -> bool:
 	var query := PhysicsPointQueryParameters2D.new()
+
 	query.position = test_position
 	query.collision_mask = 1
 
@@ -148,20 +148,16 @@ func choose_mouse_type() -> void:
 
 	effect_time = 0.0
 
-	if roll < 0.50:
+	if roll < 0.60:
 		mouse_type = "normal"
+
 		mouse_sprite.region_enabled = true
 		mouse_sprite.region_rect = NORMAL_MOUSE_RECT
-		mouse_sprite.modulate = Color.WHITE
-
-	elif roll < 0.90:
-		mouse_type = "purple"
-		mouse_sprite.region_enabled = true
-		mouse_sprite.region_rect = PURPLE_MOUSE_RECT
 		mouse_sprite.modulate = Color.WHITE
 
 	else:
-		mouse_type = "gold"
+		mouse_type = "purple"
+
 		mouse_sprite.region_enabled = true
-		mouse_sprite.region_rect = NORMAL_MOUSE_RECT
-		mouse_sprite.modulate = Color(1.0, 0.78, 0.15)
+		mouse_sprite.region_rect = PURPLE_MOUSE_RECT
+		mouse_sprite.modulate = Color.WHITE
