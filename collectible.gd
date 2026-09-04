@@ -9,8 +9,7 @@ signal collected(mouse_type: String, catch_position: Vector2)
 @export var wander_min_time: float = 0.6
 @export var wander_max_time: float = 1.4
 
-@export var mouse_sprite: Sprite2D
-
+@onready var mouse_sprite: AnimatedSprite2D = $Sprite2D
 @onready var enemy: CharacterBody2D = $"../Enemy"
 @onready var player: CharacterBody2D = $"../Player"
 
@@ -21,9 +20,6 @@ var wander_time: float = 0.0
 
 var effect_time: float = 0.0
 
-const NORMAL_MOUSE_RECT := Rect2(500, 80, 500, 400)
-const PURPLE_MOUSE_RECT := Rect2(0, 500, 500, 500)
-
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -31,6 +27,9 @@ func _ready() -> void:
 	move_to_random_position()
 	choose_mouse_type()
 	choose_new_wander_direction()
+
+	mouse_sprite.animation = "down"
+	mouse_sprite.play()
 
 
 func _physics_process(delta: float) -> void:
@@ -62,6 +61,25 @@ func _physics_process(delta: float) -> void:
 		choose_new_wander_direction()
 	else:
 		global_position = proposed_position
+		update_scurry_animation(wander_direction)
+
+
+func update_scurry_animation(direction: Vector2) -> void:
+	var animation_name: String
+
+	if abs(direction.x) > abs(direction.y):
+		if direction.x > 0.0:
+			animation_name = "right"
+		else:
+			animation_name = "left"
+	else:
+		if direction.y > 0.0:
+			animation_name = "down"
+		else:
+			animation_name = "up"
+
+	if mouse_sprite.animation != animation_name or not mouse_sprite.is_playing():
+		mouse_sprite.play(animation_name)
 
 
 func _draw() -> void:
@@ -127,6 +145,8 @@ func choose_new_wander_direction() -> void:
 	wander_direction = Vector2.RIGHT.rotated(randf_range(0.0, TAU))
 	wander_time = randf_range(wander_min_time, wander_max_time)
 
+	update_scurry_animation(wander_direction)
+
 
 func is_position_blocked(test_position: Vector2) -> bool:
 	var query := PhysicsPointQueryParameters2D.new()
@@ -150,14 +170,8 @@ func choose_mouse_type() -> void:
 
 	if roll < 0.60:
 		mouse_type = "normal"
-
-		mouse_sprite.region_enabled = true
-		mouse_sprite.region_rect = NORMAL_MOUSE_RECT
 		mouse_sprite.modulate = Color.WHITE
 
 	else:
 		mouse_type = "purple"
-
-		mouse_sprite.region_enabled = true
-		mouse_sprite.region_rect = PURPLE_MOUSE_RECT
-		mouse_sprite.modulate = Color.WHITE
+		mouse_sprite.modulate = Color(0.75, 0.45, 1.0)
