@@ -12,7 +12,7 @@ var rush_active: bool = false
 var rush_effect_time: float = 0.0
 
 @onready var boost_timer: Timer = $BoostTimer
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $Sprite2D
 
 
 func _ready() -> void:
@@ -23,6 +23,8 @@ func _ready() -> void:
 	rush_effect_time = 0.0
 
 	sprite.modulate = Color.WHITE
+	sprite.animation = "down"
+	sprite.stop()
 
 	boost_timer.stop()
 
@@ -52,6 +54,7 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if defeated:
 		velocity = Vector2.ZERO
+		sprite.stop()
 		return
 
 	if rush_active:
@@ -63,11 +66,16 @@ func _physics_process(delta: float) -> void:
 
 		if distance_to_target > 16.0:
 			var direction := global_position.direction_to(target_position)
+
 			velocity = direction * current_speed
+
+			update_walk_animation(direction)
 		else:
 			velocity = Vector2.ZERO
+			sprite.stop()
 	else:
 		velocity = Vector2.ZERO
+		sprite.stop()
 
 	move_and_slide()
 
@@ -85,6 +93,27 @@ func _physics_process(delta: float) -> void:
 		margin,
 		screen_size.y - margin
 	)
+
+
+func update_walk_animation(direction: Vector2) -> void:
+	var animation_name: String
+
+	if abs(direction.x) > abs(direction.y):
+		if direction.x > 0.0:
+			animation_name = "right"
+		else:
+			animation_name = "left"
+	else:
+		if direction.y > 0.0:
+			animation_name = "down"
+		else:
+			animation_name = "up"
+
+	if sprite.animation != animation_name:
+		sprite.animation = animation_name
+
+	if not sprite.is_playing():
+		sprite.play()
 
 
 func _draw() -> void:
@@ -128,6 +157,7 @@ func show_defeated() -> void:
 	defeated = true
 	touch_active = false
 	velocity = Vector2.ZERO
+	sprite.stop()
 	z_index = 50
 
 
