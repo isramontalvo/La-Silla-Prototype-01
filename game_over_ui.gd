@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var panel: PanelContainer = $Overlay/CenterContainer/PanelContainer
 @onready var game_over_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GameOverLabel
 @onready var final_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FinalScoreLabel
+@onready var best_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BestScoreLabel
 @onready var restart_button: Button = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RestartButton
 
 var game_over_active: bool = false
@@ -16,7 +17,7 @@ func _ready() -> void:
 	restart_button.hide()
 
 	var strip := StyleBoxFlat.new()
-	strip.bg_color = Color(0.0, 0.0, 0.0, 0.22)
+	strip.bg_color = Color(0.0, 0.0, 0.0, 0.6)
 	strip.corner_radius_top_left = 0
 	strip.corner_radius_top_right = 0
 	strip.corner_radius_bottom_left = 0
@@ -30,17 +31,19 @@ func _ready() -> void:
 	game_over_label.add_theme_color_override("font_outline_color", Color(0.1, 0.0, 0.0, 0.9))
 	game_over_label.add_theme_constant_override("outline_size", 4)
 
-	final_score_label.text = "tap to retry"
+	final_score_label.text = "SCORE 0"
 	final_score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	final_score_label.add_theme_font_size_override("font_size", 18)
-	final_score_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.45))
-	final_score_label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 0.35))
-	final_score_label.add_theme_constant_override("outline_size", 1)
+	final_score_label.add_theme_font_size_override("font_size", 36)
+	final_score_label.add_theme_color_override("font_color", Color(0.96, 0.92, 0.98, 1.0))
+	final_score_label.add_theme_color_override("font_outline_color", Color(0.08, 0.055, 0.1, 1.0))
+	final_score_label.add_theme_constant_override("outline_size", 2)
 	final_score_label.show()
 
 
-func show_game_over(_final_score: int) -> void:
+func show_game_over(final_score: int, best_score: int) -> void:
 	game_over_active = true
+	final_score_label.text = "SCORE " + str(final_score)
+	best_score_label.text = "BEST " + str(best_score)
 
 	overlay.color = Color(0.0, 0.0, 0.0, 0.0)
 	overlay.show()

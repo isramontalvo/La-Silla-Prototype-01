@@ -8,6 +8,10 @@ var new_best_announced: bool = false
 var first_mouse_caught: bool = false
 
 var rush_time_left: float = 0.0
+var rush_visual_time: float = 0.0
+var rush_refill_flash: float = 0.0
+var rush_background_style: StyleBoxFlat
+var rush_fill_style: StyleBoxFlat
 
 const RUSH_ADD_TIME := 4.0
 const RUSH_MAX_TIME := 10.0
@@ -15,7 +19,6 @@ const RUSH_MAX_TIME := 10.0
 const SAVE_PATH := "user://mouse_rush_score.cfg"
 
 @onready var score_label: Label = $UI/ScoreLabel
-@onready var best_score_label: Label = $UI/BestScoreLabel
 @onready var rush_label: Label = $UI/RushLabel
 @onready var rush_bar: ProgressBar = $UI/RushBar
 @onready var ui = $UI
@@ -45,6 +48,7 @@ func _ready() -> void:
 	setup_grandpa_speed_timer()
 	setup_rush_ui()
 	update_score_labels()
+	score_label.pivot_offset = score_label.size * 0.5
 
 	if calm_music.stream != null:
 		calm_music.pitch_scale = 1.0
@@ -53,6 +57,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	update_rush_timer(delta)
+	update_rush_visuals(delta)
 
 
 func setup_grandpa_speed_timer() -> void:
@@ -74,6 +79,15 @@ func setup_rush_ui() -> void:
 	rush_bar.max_value = RUSH_MAX_TIME
 	rush_bar.value = 0.0
 	rush_bar.show_percentage = false
+
+	# Each run owns its styles, so refill flashes cannot carry into a retry.
+	rush_background_style = rush_bar.get_theme_stylebox("background").duplicate() as StyleBoxFlat
+	rush_fill_style = rush_bar.get_theme_stylebox("fill").duplicate() as StyleBoxFlat
+	rush_bar.add_theme_stylebox_override("background", rush_background_style)
+	rush_bar.add_theme_stylebox_override("fill", rush_fill_style)
+	rush_bar.pivot_offset = rush_bar.size * 0.5
+	rush_bar.draw.connect(draw_rush_fuel_highlight)
+	update_rush_visuals(0.0)
 
 
 func _on_collectible_collected(
@@ -135,6 +149,8 @@ func add_rush_time() -> void:
 	player.set_rush_active(true)
 
 	rush_bar.value = rush_time_left
+	rush_refill_flash = 1.0
+	update_rush_visuals(0.0)
 
 
 func update_rush_timer(delta: float) -> void:
@@ -152,6 +168,59 @@ func update_rush_timer(delta: float) -> void:
 
 	if rush_time_left <= 0.0:
 		player.set_rush_active(false)
+
+
+func update_rush_visuals(delta: float) -> void:
+	rush_visual_time += delta
+	rush_refill_flash = maxf(rush_refill_flash - delta * 3.5, 0.0)
+
+	var active := rush_time_left > 0.0
+	var pulse := (sin(rush_visual_time * TAU * 2.0) + 1.0) * 0.5
+	var low_fuel := active and rush_time_left <= 2.0
+	var fuel_color := Color(0.82, 0.16, 1.0)
+	var frame_color := Color(0.32, 0.23, 0.37)
+	var label_color := Color(0.82, 0.76, 0.87)
+
+	if active:
+		frame_color = Color(0.68, 0.32, 0.85)
+		label_color = Color(1.0, 0.96, 1.0)
+		if low_fuel:
+			fuel_color = fuel_color.lerp(Color(1.0, 0.3, 0.68), pulse * 0.65)
+			frame_color = frame_color.lerp(Color(1.0, 0.48, 0.82), pulse * 0.6)
+
+	rush_fill_style.bg_color = fuel_color.lerp(Color(1.0, 0.88, 1.0), rush_refill_flash)
+	rush_background_style.border_color = frame_color.lerp(Color(1.0, 0.88, 1.0), rush_refill_flash)
+	rush_label.add_theme_color_override("font_color", label_color)
+	# A small vertical punch keeps the gauge inside the wooden scoreboard.
+	rush_bar.scale = Vector2(1.0, 1.0 + rush_refill_flash * 0.12)
+	rush_bar.queue_redraw()
+
+
+func draw_rush_fuel_highlight() -> void:
+	if rush_time_left <= 0.0:
+		return
+
+	# Draw only inside the actual fill: a moving reflection suggests glossy fuel.
+	var fill_width := (rush_bar.size.x - 6.0) * rush_bar.ratio
+	if fill_width <= 6.0:
+		return
+
+	var shine_width := fill_width - 6.0
+	rush_bar.draw_line(
+		Vector2(6.0, 7.0), Vector2(6.0 + shine_width, 7.0),
+		Color(1.0, 0.85, 1.0, 0.45), 2.0, true
+	)
+	var reflection_x := fmod(rush_visual_time * 38.0, rush_bar.size.x + 24.0) - 24.0
+	for band in range(8):
+		var band_start := reflection_x + band * 3.0
+		var left := maxf(band_start, 0.0)
+		var right := minf(band_start + 3.0, shine_width)
+		if right > left:
+			var opacity := sin((band + 0.5) / 8.0 * PI) * 0.18
+			rush_bar.draw_rect(
+				Rect2(6.0 + left, 9.0, right - left, rush_bar.size.y - 16.0),
+				Color(1.0, 0.85, 1.0, opacity)
+			)
 
 
 func get_mouse_popup_color(mouse_type: String) -> Color:
@@ -309,7 +378,6 @@ func show_new_best() -> void:
 
 func update_score_labels() -> void:
 	score_label.text = str(score)
-	best_score_label.text = "BEST " + str(best_score)
 
 
 func save_best_score() -> void:
@@ -348,4 +416,5 @@ func _on_player_caught() -> void:
 
 	game_over_sound.play()
 
-	game_over_ui.show_game_over(score)
+	ui.hide()
+	game_over_ui.show_game_over(score, best_score)

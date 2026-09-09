@@ -310,6 +310,32 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vawvv"]
 
+[sub_resource type="FontVariation" id="FontVariation_scoreboard"]
+variation_embolden = 0.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rush_background"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.075, 0.035, 0.105, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32, 0.23, 0.37, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rush_fill"]
+bg_color = Color(0.82, 0.16, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2cqfq"]
 radius = 7.3333282
 height = 24.666656
@@ -533,38 +559,45 @@ shape = SubResource("CircleShape2D_vawvv")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=716114552]
 
-[node name="BestScoreLabel" type="Label" parent="UI" unique_id=885950721]
-z_index = 10
-offset_left = 122.0
-offset_top = 78.0
-offset_right = 194.0
-offset_bottom = 104.0
-text = "BEST: 0"
-
 [node name="ScoreLabel" type="Label" parent="UI" unique_id=1924808413]
-offset_left = 26.0
-offset_top = 73.0
-offset_right = 155.0
-offset_bottom = 161.0
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 64
+offset_left = 40.0
+offset_top = 66.0
+offset_right = 192.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.96, 0.92, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.055, 0.1, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+theme_override_font_sizes/font_size = 46
 text = "0"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RushBar" type="ProgressBar" parent="UI" unique_id=891011962]
-offset_left = 91.0
-offset_top = 60.0
-offset_right = 187.0
-offset_bottom = 77.0
+offset_left = 40.0
+offset_top = 121.0
+offset_right = 192.0
+offset_bottom = 147.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_rush_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rush_fill")
 max_value = 10.0
+step = 0.0
 show_percentage = false
 
 [node name="RushLabel" type="Label" parent="UI" unique_id=1686969111]
-offset_left = 44.0
-offset_top = 57.0
-offset_right = 111.0
-offset_bottom = 80.0
+offset_left = 40.0
+offset_top = 117.0
+offset_right = 192.0
+offset_bottom = 151.0
+theme_override_colors/font_color = Color(0.82, 0.76, 0.87, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.025, 0.12, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+theme_override_font_sizes/font_size = 22
 text = "RUSH"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Enemy" type="CharacterBody2D" parent="." unique_id=1825798641]
 position = Vector2(340, 130)
@@ -614,15 +647,38 @@ theme_override_constants/margin_bottom = 30
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer" unique_id=1084164231]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="GameOverLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1651680631]
 layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
 text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="FinalScoreLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=15344005]
 layout_mode = 2
-text = "🐭"
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+text = "SCORE 0"
+horizontal_alignment = 1
+
+[node name="BestScoreLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=885950721]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.81, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.055, 0.1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+theme_override_font_sizes/font_size = 28
+text = "BEST 0"
+horizontal_alignment = 1
+
+[node name="RetryLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1700734306]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.86, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.055, 0.1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+theme_override_font_sizes/font_size = 24
+text = "tap to retry"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2051500853]

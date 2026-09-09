@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="La Silla Prototype 01"
+config/name="Mouse Rush!"
 run/main_scene="uid://c0p88spe4a3yl"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
