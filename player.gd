@@ -3,6 +3,12 @@ extends CharacterBody2D
 @export var base_speed: float = 250.0
 @export var rush_speed_bonus: float = 120.0
 
+# Clockwise from right; Godot's positive Y direction points down the screen.
+const WALK_ANIMATIONS := [
+	&"right", &"down_right", &"down", &"down_left",
+	&"left", &"up_left", &"up", &"up_right"
+]
+
 var current_speed: float
 var touch_active: bool = false
 var target_position: Vector2
@@ -96,21 +102,18 @@ func _physics_process(delta: float) -> void:
 
 
 func update_walk_animation(direction: Vector2) -> void:
-	var animation_name: String
+	if direction.is_zero_approx():
+		return
 
-	if abs(direction.x) > abs(direction.y):
-		if direction.x > 0.0:
-			animation_name = "right"
-		else:
-			animation_name = "left"
-	else:
-		if direction.y > 0.0:
-			animation_name = "down"
-		else:
-			animation_name = "up"
+	var direction_index := posmod(roundi(direction.angle() / (PI / 4.0)), 8)
+	var animation_name: StringName = WALK_ANIMATIONS[direction_index]
 
 	if sprite.animation != animation_name:
-		sprite.animation = animation_name
+		# Keep the current footfall when turning, instead of restarting the cycle.
+		var frame := sprite.frame
+		var progress := sprite.frame_progress
+		sprite.play(animation_name)
+		sprite.set_frame_and_progress(frame, progress)
 
 	if not sprite.is_playing():
 		sprite.play()
