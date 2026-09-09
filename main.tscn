@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://hyibctuqysl6" path="res://game_over_ui.gd" id="6_7mycd"]
 [ext_resource type="AudioStream" uid="uid://corr76h0f78gf" path="res://assets/sounds/threeTone2.ogg" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://eh70x3oecc8o" path="res://assets/sprites/grandpa_run_4dir.png" id="8_2cqfq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/grandpa_run_diagonals.png" id="grandpa_diagonals"]
 [ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
@@ -537,8 +538,140 @@ region = Rect2(628, 314, 314, 314)
 atlas = ExtResource("8_2cqfq")
 region = Rect2(942, 314, 314, 314)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_right_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 628, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_right_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 628, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_right_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 628, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_right_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 628, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 942, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 942, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 942, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 942, 314, 314)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_vivmo"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_3")
+}],
+"loop": true,
+"name": &"down_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_3")
+}],
+"loop": true,
+"name": &"down_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_3")
+}],
+"loop": true,
+"name": &"up_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_3")
+}],
+"loop": true,
+"name": &"up_left",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_seu75")

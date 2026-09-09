@@ -4,6 +4,12 @@ signal player_caught
 
 @export var speed: float = 130.0
 
+# Clockwise from right, matching the cat's eight-direction facing.
+const RUN_ANIMATIONS := [
+	&"right", &"down_right", &"down", &"down_left",
+	&"left", &"up_left", &"up", &"up_right"
+]
+
 var avoidance_direction: Vector2 = Vector2.ZERO
 var avoidance_time: float = 0.0
 var chase_active: bool = false
@@ -57,21 +63,21 @@ func _physics_process(delta: float) -> void:
 
 
 func update_run_animation(direction: Vector2) -> void:
-	var animation_name: String
+	if direction.is_zero_approx():
+		return
 
-	if abs(direction.x) > abs(direction.y):
-		if direction.x > 0.0:
-			animation_name = "right"
-		else:
-			animation_name = "left"
-	else:
-		if direction.y > 0.0:
-			animation_name = "down"
-		else:
-			animation_name = "up"
+	var direction_index := posmod(roundi(direction.angle() / (PI / 4.0)), 8)
+	var animation_name: StringName = RUN_ANIMATIONS[direction_index]
 
-	if sprite.animation != animation_name or not sprite.is_playing():
+	if sprite.animation != animation_name:
+		# Preserve the current footfall when changing direction.
+		var frame := sprite.frame
+		var progress := sprite.frame_progress
 		sprite.play(animation_name)
+		sprite.set_frame_and_progress(frame, progress)
+
+	if not sprite.is_playing():
+		sprite.play()
 
 
 func start_chase() -> void:
