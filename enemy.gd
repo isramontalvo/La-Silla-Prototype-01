@@ -10,9 +10,13 @@ const RUN_ANIMATIONS := [
 	&"left", &"up_left", &"up", &"up_right"
 ]
 
+const VICTORY_SPRITE_SCALE := Vector2(0.075, 0.075)
+const VICTORY_SPRITE_POSITION := Vector2(2.3333335, 8.5)
+
 var avoidance_direction: Vector2 = Vector2.ZERO
 var avoidance_time: float = 0.0
 var chase_active: bool = false
+var catch_registered: bool = false
 
 @onready var player: CharacterBody2D = $"../Player"
 @onready var sprite: AnimatedSprite2D = $Sprite2D
@@ -24,6 +28,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if catch_registered:
+		velocity = Vector2.ZERO
+		return
+
 	if not chase_active:
 		velocity = Vector2.ZERO
 		sprite.stop()
@@ -45,6 +53,10 @@ func _physics_process(delta: float) -> void:
 		var collision := get_slide_collision(i)
 
 		if collision.get_collider() == player:
+			catch_registered = true
+			chase_active = false
+			velocity = Vector2.ZERO
+			sprite.stop()
 			player_caught.emit()
 			return
 
@@ -81,8 +93,24 @@ func update_run_animation(direction: Vector2) -> void:
 
 
 func start_chase() -> void:
+	if catch_registered:
+		return
+
 	chase_active = true
 
 
 func increase_speed(amount: float) -> void:
 	speed += amount
+
+
+func freeze_for_catch() -> void:
+	catch_registered = true
+	chase_active = false
+	velocity = Vector2.ZERO
+	sprite.stop()
+
+
+func play_victory() -> void:
+	sprite.position = VICTORY_SPRITE_POSITION
+	sprite.scale = VICTORY_SPRITE_SCALE
+	sprite.play(&"victory")

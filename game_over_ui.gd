@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var game_over_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GameOverLabel
 @onready var final_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FinalScoreLabel
 @onready var best_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BestScoreLabel
+@onready var message_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MessageLabel
 @onready var restart_button: Button = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RestartButton
 
 var game_over_active: bool = false
@@ -39,11 +40,18 @@ func _ready() -> void:
 	final_score_label.add_theme_constant_override("outline_size", 2)
 	final_score_label.show()
 
+	message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	message_label.add_theme_font_size_override("font_size", 24)
+	message_label.add_theme_color_override("font_color", Color(1.0, 0.82, 0.28, 1.0))
+	message_label.add_theme_color_override("font_outline_color", Color(0.08, 0.055, 0.1, 1.0))
+	message_label.add_theme_constant_override("outline_size", 2)
 
-func show_game_over(final_score: int, best_score: int) -> void:
+
+func show_game_over(final_score: int, best_score: int, result_message: String) -> void:
 	game_over_active = true
 	final_score_label.text = "SCORE " + str(final_score)
 	best_score_label.text = "BEST " + str(best_score)
+	message_label.text = result_message
 
 	overlay.color = Color(0.0, 0.0, 0.0, 0.0)
 	overlay.show()

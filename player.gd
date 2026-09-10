@@ -9,6 +9,9 @@ const WALK_ANIMATIONS := [
 	&"left", &"up_left", &"up", &"up_right"
 ]
 
+const DEFEATED_SPRITE_SCALE := Vector2(0.1, 0.1)
+const DEFEATED_SPRITE_POSITION := Vector2(0.0, 13.0)
+
 var current_speed: float
 var touch_active: bool = false
 var target_position: Vector2
@@ -60,7 +63,6 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if defeated:
 		velocity = Vector2.ZERO
-		sprite.stop()
 		return
 
 	if rush_active:
@@ -156,12 +158,23 @@ func set_rush_active(active: bool) -> void:
 	queue_redraw()
 
 
-func show_defeated() -> void:
+func freeze_for_catch() -> void:
 	defeated = true
 	touch_active = false
 	velocity = Vector2.ZERO
+	rush_active = false
+	current_speed = base_speed
+	rush_effect_time = 0.0
+	sprite.modulate = Color.WHITE
 	sprite.stop()
 	z_index = 50
+	queue_redraw()
+
+
+func play_defeated() -> void:
+	sprite.position = DEFEATED_SPRITE_POSITION
+	sprite.scale = DEFEATED_SPRITE_SCALE
+	sprite.play(&"defeated")
 
 
 func _on_boost_timer_timeout() -> void:

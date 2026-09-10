@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://hyibctuqysl6" path="res://game_over_ui.gd" id="6_7mycd"]
 [ext_resource type="AudioStream" uid="uid://corr76h0f78gf" path="res://assets/sounds/threeTone2.ogg" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://eh70x3oecc8o" path="res://assets/sprites/grandpa_run_4dir.png" id="8_2cqfq"]
-[ext_resource type="Texture2D" path="res://assets/sprites/grandpa_run_diagonals.png" id="grandpa_diagonals"]
 [ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
@@ -17,7 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://cxlgn0n4ugy3h" path="res://assets/title/Mouse Rush !.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://duok2no1ddx0a" path="res://assets/title/background.png" id="13_ycdy4"]
 [ext_resource type="AudioStream" uid="uid://dv2u8cc3liwur" path="res://assets/sounds/BuzzyBits_LowKeyBuzzing_Loop.ogg" id="14_w48qg"]
+[ext_resource type="Texture2D" uid="uid://c5465acp31m1c" path="res://assets/sprites/cat_defeat.png" id="cat_defeat"]
 [ext_resource type="Texture2D" uid="uid://b3i6gs8y3d1dd" path="res://assets/sprites/cat_walk_diagonals.png" id="cat_diagonals"]
+[ext_resource type="Texture2D" uid="uid://3dxh8wnoghty" path="res://assets/sprites/grandpa_run_diagonals.png" id="grandpa_diagonals"]
+[ext_resource type="Texture2D" uid="uid://ctyuyu571dh5m" path="res://assets/sprites/grandpa_victory.png" id="grandpa_victory"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w48qg"]
 size = Vector2(244.5, 261)
@@ -39,6 +41,14 @@ size = Vector2(109, 65)
 size = Vector2(88, 51)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_074og"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cat_defeated_0"]
+atlas = ExtResource("cat_defeat")
+region = Rect2(0, 0, 887, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cat_defeated_1"]
+atlas = ExtResource("cat_defeat")
+region = Rect2(887, 0, 887, 887)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2cqfq"]
 atlas = ExtResource("4_vivmo")
@@ -170,6 +180,17 @@ region = Rect2(942, 628, 314, 314)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v630f"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cat_defeated_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cat_defeated_1")
+}],
+"loop": 0,
+"name": &"defeated",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2cqfq")
@@ -490,6 +511,38 @@ region = Rect2(628, 0, 314, 314)
 atlas = ExtResource("8_2cqfq")
 region = Rect2(942, 0, 314, 314)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 314, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_0"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(0, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_1"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(314, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_2"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(628, 0, 314, 314)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_3"]
+atlas = ExtResource("grandpa_diagonals")
+region = Rect2(942, 0, 314, 314)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rl1p"]
 atlas = ExtResource("8_2cqfq")
 region = Rect2(0, 628, 314, 314)
@@ -538,37 +591,21 @@ region = Rect2(628, 314, 314, 314)
 atlas = ExtResource("8_2cqfq")
 region = Rect2(942, 314, 314, 314)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_0"]
 atlas = ExtResource("grandpa_diagonals")
-region = Rect2(0, 0, 314, 314)
+region = Rect2(0, 942, 314, 314)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_1"]
 atlas = ExtResource("grandpa_diagonals")
-region = Rect2(314, 0, 314, 314)
+region = Rect2(314, 942, 314, 314)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_2"]
 atlas = ExtResource("grandpa_diagonals")
-region = Rect2(628, 0, 314, 314)
+region = Rect2(628, 942, 314, 314)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_right_3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_3"]
 atlas = ExtResource("grandpa_diagonals")
-region = Rect2(942, 0, 314, 314)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_0"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(0, 314, 314, 314)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_1"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(314, 314, 314, 314)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_2"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(628, 314, 314, 314)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_down_left_3"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(942, 314, 314, 314)
+region = Rect2(942, 942, 314, 314)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_right_0"]
 atlas = ExtResource("grandpa_diagonals")
@@ -586,92 +623,20 @@ region = Rect2(628, 628, 314, 314)
 atlas = ExtResource("grandpa_diagonals")
 region = Rect2(942, 628, 314, 314)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_0"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(0, 942, 314, 314)
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_victory_0"]
+atlas = ExtResource("grandpa_victory")
+region = Rect2(0, 0, 724, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_1"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(314, 942, 314, 314)
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_victory_1"]
+atlas = ExtResource("grandpa_victory")
+region = Rect2(724, 0, 724, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_2"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(628, 942, 314, 314)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_up_left_3"]
-atlas = ExtResource("grandpa_diagonals")
-region = Rect2(942, 942, 314, 314)
+[sub_resource type="AtlasTexture" id="AtlasTexture_grandpa_victory_2"]
+atlas = ExtResource("grandpa_victory")
+region = Rect2(1448, 0, 724, 724)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vivmo"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_right_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_right_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_right_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_right_3")
-}],
-"loop": true,
-"name": &"down_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_left_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_left_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_left_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_down_left_3")
-}],
-"loop": true,
-"name": &"down_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_right_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_right_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_right_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_right_3")
-}],
-"loop": true,
-"name": &"up_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_left_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_left_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_left_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grandpa_up_left_3")
-}],
-"loop": true,
-"name": &"up_left",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_seu75")
@@ -687,6 +652,40 @@ animations = [{
 }],
 "loop": 1,
 "name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_left_3")
+}],
+"loop": 1,
+"name": &"down_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_down_right_3")
+}],
+"loop": 1,
+"name": &"down_right",
 "speed": 5.0
 }, {
 "frames": [{
@@ -739,6 +738,60 @@ animations = [{
 "loop": 1,
 "name": &"up",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_left_3")
+}],
+"loop": 1,
+"name": &"up_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_up_right_3")
+}],
+"loop": 1,
+"name": &"up_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_victory_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_victory_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_victory_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_victory_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grandpa_victory_2")
+}],
+"loop": 0,
+"name": &"victory",
+"speed": 12.5
 }]
 
 [node name="Main" type="Node2D" unique_id=1116524799]
@@ -901,7 +954,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="GameOverUI/Overlay/CenterContainer" unique_id=575242163]
-custom_minimum_size = Vector2(420, 260)
+custom_minimum_size = Vector2(480, 320)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="GameOverUI/Overlay/CenterContainer/PanelContainer" unique_id=430377382]
@@ -935,6 +988,12 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = SubResource("FontVariation_scoreboard")
 theme_override_font_sizes/font_size = 28
 text = "BEST 0"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=543122027]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_scoreboard")
+text = "PAWS TOO SLOW"
 horizontal_alignment = 1
 
 [node name="RetryLabel" type="Label" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1700734306]

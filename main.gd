@@ -4,6 +4,7 @@ var score: int = 0
 var best_score: int = 0
 var run_start_best_score: int = 0
 var new_best_announced: bool = false
+var death_sequence_active: bool = false
 
 var first_mouse_caught: bool = false
 
@@ -15,6 +16,33 @@ var rush_fill_style: StyleBoxFlat
 
 const RUSH_ADD_TIME := 4.0
 const RUSH_MAX_TIME := 10.0
+const HIT_STOP_DURATION := 0.08
+const RESULTS_REVEAL_DELAY := 0.50
+
+const NEW_BEST_MESSAGES := [
+	"TOP CAT!",
+	"PURRFECT RUN!",
+	"NEW CLAW-SOME BEST",
+	"FELINE FINE",
+]
+const BAD_RUN_MESSAGES := [
+	"CAT-ASTROPHIC",
+	"NINE LIVES, HUH?",
+	"THAT COST A LIFE",
+	"NOT VERY NIMBLE",
+]
+const CLOSE_RUN_MESSAGES := [
+	"ALMOST PURRFECT",
+	"WHISKER CLOSE",
+	"ONE PAW AWAY",
+	"SO CLOSE, FUR REAL",
+]
+const NORMAL_RUN_MESSAGES := [
+	"PAWS TOO SLOW",
+	"OUT OF LIVES?",
+	"CURIOSITY GOT YOU",
+	"CAUGHT BY THE WHISKERS",
+]
 
 const SAVE_PATH := "user://mouse_rush_score.cfg"
 
@@ -56,6 +84,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if death_sequence_active:
+		return
+
 	update_rush_timer(delta)
 	update_rush_visuals(delta)
 
@@ -409,12 +440,44 @@ func load_best_score() -> void:
 
 
 func _on_player_caught() -> void:
+	if death_sequence_active:
+		return
+
+	death_sequence_active = true
+	var result_message := choose_game_over_message(score, run_start_best_score)
+
 	if grandpa_speed_timer != null:
 		grandpa_speed_timer.stop()
 
-	player.show_defeated()
-
+	player.freeze_for_catch()
+	enemy.freeze_for_catch()
+	collectible.set_physics_process(false)
+	collectible.monitoring = false
 	game_over_sound.play()
 
+	await get_tree().create_timer(HIT_STOP_DURATION).timeout
+
+	player.play_defeated()
+	enemy.play_victory()
+
+	await get_tree().create_timer(RESULTS_REVEAL_DELAY).timeout
+
 	ui.hide()
-	game_over_ui.show_game_over(score, best_score)
+	game_over_ui.show_game_over(score, best_score, result_message)
+
+
+func choose_game_over_message(final_score: int, previous_best: int) -> String:
+	return get_game_over_message_pool(final_score, previous_best).pick_random()
+
+
+func get_game_over_message_pool(final_score: int, previous_best: int) -> Array:
+	if final_score > previous_best:
+		return NEW_BEST_MESSAGES
+
+	if final_score <= 3:
+		return BAD_RUN_MESSAGES
+
+	if previous_best - final_score <= 3:
+		return CLOSE_RUN_MESSAGES
+
+	return NORMAL_RUN_MESSAGES
