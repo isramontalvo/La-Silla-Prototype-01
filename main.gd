@@ -1,5 +1,7 @@
 extends Node2D
 
+const PurplePickupBurstEffect := preload("res://purple_pickup_burst.gd")
+
 var score: int = 0
 var best_score: int = 0
 var run_start_best_score: int = 0
@@ -13,9 +15,13 @@ var rush_visual_time: float = 0.0
 var rush_refill_flash: float = 0.0
 var rush_background_style: StyleBoxFlat
 var rush_fill_style: StyleBoxFlat
+var rush_bar_base_scale: Vector2
+var purple_pickup_burst: Node2D
+var purple_screen_pulse_tween: Tween
 
 const RUSH_ADD_TIME := 4.0
 const RUSH_MAX_TIME := 10.0
+const PURPLE_SCREEN_PULSE_DURATION := 0.10
 const HIT_STOP_DURATION := 0.08
 const RESULTS_REVEAL_DELAY := 0.50
 
@@ -49,6 +55,7 @@ const SAVE_PATH := "user://mouse_rush_score.cfg"
 @onready var score_label: Label = $UI/ScoreLabel
 @onready var rush_label: Label = $UI/RushLabel
 @onready var rush_bar: ProgressBar = $UI/RushBar
+@onready var purple_pickup_flash: ColorRect = $UI/PurplePickupFlash
 @onready var ui = $UI
 
 @onready var collectible = $Collectible
@@ -116,6 +123,7 @@ func setup_rush_ui() -> void:
 	rush_fill_style = rush_bar.get_theme_stylebox("fill").duplicate() as StyleBoxFlat
 	rush_bar.add_theme_stylebox_override("background", rush_background_style)
 	rush_bar.add_theme_stylebox_override("fill", rush_fill_style)
+	rush_bar_base_scale = rush_bar.scale
 	rush_bar.pivot_offset = rush_bar.size * 0.5
 	rush_bar.draw.connect(draw_rush_fuel_highlight)
 	update_rush_visuals(0.0)
@@ -144,6 +152,7 @@ func _on_collectible_collected(
 			speed_boost_sound.play()
 
 			add_rush_time()
+			show_purple_pickup_feedback(catch_position)
 
 	score += 1
 
@@ -184,6 +193,35 @@ func add_rush_time() -> void:
 	update_rush_visuals(0.0)
 
 
+func show_purple_pickup_feedback(catch_position: Vector2) -> void:
+	if is_instance_valid(purple_pickup_burst):
+		purple_pickup_burst.queue_free()
+
+	purple_pickup_burst = PurplePickupBurstEffect.new()
+	purple_pickup_burst.name = "PurplePickupBurst"
+	purple_pickup_burst.position = catch_position
+	add_child(purple_pickup_burst)
+
+	player.play_purple_pickup_pulse()
+	play_purple_screen_pulse()
+
+
+func play_purple_screen_pulse() -> void:
+	if purple_screen_pulse_tween != null and purple_screen_pulse_tween.is_valid():
+		purple_screen_pulse_tween.kill()
+
+	purple_pickup_flash.color = Color(0.88, 0.10, 1.0, 0.11)
+	purple_pickup_flash.show()
+	purple_screen_pulse_tween = create_tween()
+	purple_screen_pulse_tween.tween_property(
+		purple_pickup_flash,
+		"color:a",
+		0.0,
+		PURPLE_SCREEN_PULSE_DURATION
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	purple_screen_pulse_tween.tween_callback(purple_pickup_flash.hide)
+
+
 func update_rush_timer(delta: float) -> void:
 	if rush_time_left <= 0.0:
 		return
@@ -203,7 +241,7 @@ func update_rush_timer(delta: float) -> void:
 
 func update_rush_visuals(delta: float) -> void:
 	rush_visual_time += delta
-	rush_refill_flash = maxf(rush_refill_flash - delta * 3.5, 0.0)
+	rush_refill_flash = maxf(rush_refill_flash - delta * 5.0, 0.0)
 
 	var active := rush_time_left > 0.0
 	var pulse := (sin(rush_visual_time * TAU * 2.0) + 1.0) * 0.5
@@ -221,9 +259,15 @@ func update_rush_visuals(delta: float) -> void:
 
 	rush_fill_style.bg_color = fuel_color.lerp(Color(1.0, 0.88, 1.0), rush_refill_flash)
 	rush_background_style.border_color = frame_color.lerp(Color(1.0, 0.88, 1.0), rush_refill_flash)
-	rush_label.add_theme_color_override("font_color", label_color)
-	# A small vertical punch keeps the gauge inside the wooden scoreboard.
-	rush_bar.scale = Vector2(1.0, 1.0 + rush_refill_flash * 0.12)
+	rush_label.add_theme_color_override(
+		"font_color",
+		label_color.lerp(Color(1.0, 0.72, 1.0), rush_refill_flash)
+	)
+	# Build on the existing refill flash and always derive scale from its scene value.
+	rush_bar.scale = rush_bar_base_scale * Vector2(
+		1.0 + rush_refill_flash * 0.08,
+		1.0 + rush_refill_flash * 0.18
+	)
 	rush_bar.queue_redraw()
 
 

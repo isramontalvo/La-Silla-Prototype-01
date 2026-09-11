@@ -11,6 +11,9 @@ const WALK_ANIMATIONS := [
 
 const DEFEATED_SPRITE_SCALE := Vector2(0.1, 0.1)
 const DEFEATED_SPRITE_POSITION := Vector2(0.0, 13.0)
+const PURPLE_PICKUP_PULSE_SCALE := 1.08
+const PURPLE_PICKUP_PUNCH_DURATION := 0.06
+const PURPLE_PICKUP_SETTLE_DURATION := 0.09
 
 var current_speed: float
 var touch_active: bool = false
@@ -19,6 +22,8 @@ var defeated: bool = false
 
 var rush_active: bool = false
 var rush_effect_time: float = 0.0
+var movement_sprite_scale: Vector2
+var purple_pickup_pulse_tween: Tween
 
 @onready var boost_timer: Timer = $BoostTimer
 @onready var sprite: AnimatedSprite2D = $Sprite2D
@@ -27,6 +32,7 @@ var rush_effect_time: float = 0.0
 func _ready() -> void:
 	current_speed = base_speed
 	target_position = global_position
+	movement_sprite_scale = sprite.scale
 
 	rush_active = false
 	rush_effect_time = 0.0
@@ -158,7 +164,34 @@ func set_rush_active(active: bool) -> void:
 	queue_redraw()
 
 
+func play_purple_pickup_pulse() -> void:
+	if defeated:
+		return
+
+	if purple_pickup_pulse_tween != null and purple_pickup_pulse_tween.is_valid():
+		purple_pickup_pulse_tween.kill()
+
+	# Always restart from the recorded scene scale so repeated pickups cannot drift.
+	sprite.scale = movement_sprite_scale
+	purple_pickup_pulse_tween = create_tween()
+	purple_pickup_pulse_tween.tween_property(
+		sprite,
+		"scale",
+		movement_sprite_scale * PURPLE_PICKUP_PULSE_SCALE,
+		PURPLE_PICKUP_PUNCH_DURATION
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	purple_pickup_pulse_tween.tween_property(
+		sprite,
+		"scale",
+		movement_sprite_scale,
+		PURPLE_PICKUP_SETTLE_DURATION
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+
 func freeze_for_catch() -> void:
+	if purple_pickup_pulse_tween != null and purple_pickup_pulse_tween.is_valid():
+		purple_pickup_pulse_tween.kill()
+
 	defeated = true
 	touch_active = false
 	velocity = Vector2.ZERO
@@ -166,6 +199,7 @@ func freeze_for_catch() -> void:
 	current_speed = base_speed
 	rush_effect_time = 0.0
 	sprite.modulate = Color.WHITE
+	sprite.scale = movement_sprite_scale
 	sprite.stop()
 	z_index = 50
 	queue_redraw()
