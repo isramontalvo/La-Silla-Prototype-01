@@ -13,7 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://cxlgn0n4ugy3h" path="res://assets/title/Mouse Rush !.png" id="13_w48qg"]
+[ext_resource type="Texture2D" uid="uid://c04g1ld2ir3x5" path="res://assets/title/Mouse_rush_title1.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://duok2no1ddx0a" path="res://assets/title/background.png" id="13_ycdy4"]
 [ext_resource type="AudioStream" uid="uid://dv2u8cc3liwur" path="res://assets/sounds/BuzzyBits_LowKeyBuzzing_Loop.ogg" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://c5465acp31m1c" path="res://assets/sprites/cat_defeat.png" id="cat_defeat"]
@@ -1080,6 +1080,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("13_w48qg")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="StartButton" type="Button" parent="TitleScreenUI/Background" unique_id=115867601]
 self_modulate = Color(1, 1, 1, 0)
@@ -1087,9 +1088,9 @@ z_index = 10
 custom_minimum_size = Vector2(220, 60)
 layout_mode = 0
 offset_left = 142.0
-offset_top = 923.0
+offset_top = 963.0
 offset_right = 508.0
-offset_bottom = 1077.0
+offset_bottom = 1094.0
 theme_override_font_sizes/font_size = 28
 text = "START"
 
