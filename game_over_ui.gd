@@ -6,7 +6,6 @@ extends CanvasLayer
 @onready var final_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FinalScoreLabel
 @onready var best_score_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BestScoreLabel
 @onready var message_label: Label = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MessageLabel
-@onready var restart_button: Button = $Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RestartButton
 
 var game_over_active: bool = false
 
@@ -15,7 +14,6 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 	overlay.hide()
-	restart_button.hide()
 
 	var strip := StyleBoxFlat.new()
 	strip.bg_color = Color(0.0, 0.0, 0.0, 0.6)

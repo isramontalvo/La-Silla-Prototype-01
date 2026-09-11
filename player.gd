@@ -25,7 +25,6 @@ var rush_effect_time: float = 0.0
 var movement_sprite_scale: Vector2
 var purple_pickup_pulse_tween: Tween
 
-@onready var boost_timer: Timer = $BoostTimer
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 
 
@@ -40,8 +39,6 @@ func _ready() -> void:
 	sprite.modulate = Color.WHITE
 	sprite.animation = "down"
 	sprite.stop()
-
-	boost_timer.stop()
 
 	queue_redraw()
 
@@ -209,7 +206,3 @@ func play_defeated() -> void:
 	sprite.position = DEFEATED_SPRITE_POSITION
 	sprite.scale = DEFEATED_SPRITE_SCALE
 	sprite.play(&"defeated")
-
-
-func _on_boost_timer_timeout() -> void:
-	pass

@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://db2xnjneppy70" path="res://assets/sounds/phaserDown3.ogg" id="8_5vw27"]
 [ext_resource type="AudioStream" uid="uid://c8dw1mpaolm7n" path="res://assets/sounds/highUp.ogg" id="9_kek77"]
 [ext_resource type="Script" uid="uid://dcahb4wa0mavv" path="res://title_screen_ui.gd" id="10_4c57u"]
-[ext_resource type="Texture2D" uid="uid://c1abb3xv8o7nw" path="res://assets/title/castle_wall.png" id="11_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://c04g1ld2ir3x5" path="res://assets/title/Mouse_rush_title1.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://duok2no1ddx0a" path="res://assets/title/background.png" id="13_ycdy4"]
 [ext_resource type="AudioStream" uid="uid://dv2u8cc3liwur" path="res://assets/sounds/BuzzyBits_LowKeyBuzzing_Loop.ogg" id="14_w48qg"]
@@ -860,9 +859,6 @@ scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_v630f")
 animation = &"left"
 
-[node name="BoostTimer" type="Timer" parent="Player" unique_id=1256605609]
-one_shot = true
-
 [node name="Collectible" type="Area2D" parent="." unique_id=461350552]
 position = Vector2(324, 300)
 script = ExtResource("3_h2yge")
@@ -1016,10 +1012,6 @@ theme_override_font_sizes/font_size = 24
 text = "tap to retry"
 horizontal_alignment = 1
 
-[node name="RestartButton" type="Button" parent="GameOverUI/Overlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2051500853]
-layout_mode = 2
-text = "RESTART"
-
 [node name="MousePickupSound" type="AudioStreamPlayer" parent="." unique_id=1411126515]
 stream = ExtResource("7_272bh")
 
@@ -1041,35 +1033,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16470589, 0.17254902, 0.1882353, 0.98039216)
-
-[node name="CatArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=332074175]
-custom_minimum_size = Vector2(720, 340)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("11_2cqfq")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="CenterContainer" type="CenterContainer" parent="TitleScreenUI/Background" unique_id=1866223885]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 210.0
-offset_top = 887.0
-offset_right = -192.0
-offset_bottom = -166.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TitleScreenUI/Background/CenterContainer" unique_id=1774419682]
-layout_mode = 2
-theme_override_constants/separation = 24
 
 [node name="ChaseArt" type="TextureRect" parent="TitleScreenUI/Background" unique_id=1587802934]
 layout_mode = 1
