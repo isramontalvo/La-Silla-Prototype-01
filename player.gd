@@ -21,7 +21,6 @@ var target_position: Vector2
 var defeated: bool = false
 
 var rush_active: bool = false
-var rush_effect_time: float = 0.0
 var movement_sprite_scale: Vector2
 var purple_pickup_pulse_tween: Tween
 
@@ -34,14 +33,10 @@ func _ready() -> void:
 	movement_sprite_scale = sprite.scale
 
 	rush_active = false
-	rush_effect_time = 0.0
 
 	sprite.modulate = Color.WHITE
 	sprite.animation = "down"
 	sprite.stop()
-
-	queue_redraw()
-
 
 func _input(event: InputEvent) -> void:
 	if defeated:
@@ -67,10 +62,6 @@ func _physics_process(delta: float) -> void:
 	if defeated:
 		velocity = Vector2.ZERO
 		return
-
-	if rush_active:
-		rush_effect_time += delta
-		queue_redraw()
 
 	if touch_active:
 		var distance_to_target := global_position.distance_to(target_position)
@@ -124,25 +115,6 @@ func update_walk_animation(direction: Vector2) -> void:
 		sprite.play()
 
 
-func _draw() -> void:
-	if not rush_active:
-		return
-
-	var pulse := (sin(rush_effect_time * 8.0) + 1.0) * 0.5
-	var radius := 34.0 + pulse * 5.0
-
-	draw_arc(
-		Vector2.ZERO,
-		radius,
-		0.0,
-		TAU,
-		48,
-		Color(0.8, 0.4, 1.0, 0.9),
-		4.0,
-		true
-	)
-
-
 func set_rush_active(active: bool) -> void:
 	if defeated:
 		return
@@ -151,14 +123,10 @@ func set_rush_active(active: bool) -> void:
 
 	if rush_active:
 		current_speed = base_speed + rush_speed_bonus
-		rush_effect_time = 0.0
 		sprite.modulate = Color(0.75, 0.45, 1.0)
 	else:
 		current_speed = base_speed
-		rush_effect_time = 0.0
 		sprite.modulate = Color.WHITE
-
-	queue_redraw()
 
 
 func play_purple_pickup_pulse() -> void:
@@ -194,12 +162,10 @@ func freeze_for_catch() -> void:
 	velocity = Vector2.ZERO
 	rush_active = false
 	current_speed = base_speed
-	rush_effect_time = 0.0
 	sprite.modulate = Color.WHITE
 	sprite.scale = movement_sprite_scale
 	sprite.stop()
 	z_index = 50
-	queue_redraw()
 
 
 func play_defeated() -> void:

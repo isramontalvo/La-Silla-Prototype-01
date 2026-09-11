@@ -18,9 +18,6 @@ var mouse_type: String = "normal"
 var wander_direction: Vector2 = Vector2.ZERO
 var wander_time: float = 0.0
 
-var effect_time: float = 0.0
-
-
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
@@ -33,9 +30,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	effect_time += delta
-	queue_redraw()
-
 	wander_time -= delta
 
 	if wander_time <= 0.0:
@@ -80,32 +74,6 @@ func update_scurry_animation(direction: Vector2) -> void:
 
 	if mouse_sprite.animation != animation_name or not mouse_sprite.is_playing():
 		mouse_sprite.play(animation_name)
-
-
-func _draw() -> void:
-	var pulse := (sin(effect_time * 5.0) + 1.0) * 0.5
-
-	var glow_color: Color
-
-	match mouse_type:
-		"purple":
-			glow_color = Color(0.8, 0.4, 1.0, 0.85)
-
-		_:
-			glow_color = Color(1.0, 1.0, 1.0, 0.85)
-
-	var radius := 22.0 + pulse * 4.0
-
-	draw_arc(
-		Vector2.ZERO,
-		radius,
-		0.0,
-		TAU,
-		40,
-		glow_color,
-		4.0,
-		true
-	)
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -165,8 +133,6 @@ func is_position_blocked(test_position: Vector2) -> bool:
 
 func choose_mouse_type() -> void:
 	var roll := randf()
-
-	effect_time = 0.0
 
 	if roll < 0.60:
 		mouse_type = "normal"
